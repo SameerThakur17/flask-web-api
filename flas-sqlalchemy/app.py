@@ -9,9 +9,9 @@ from flask_jwt_extended import (
 
 from security import authenticate
 
-from user import UserRegister
+from resources.user import UserRegister
 
-from item import ItemList, Item
+from resources.item import ItemList, Item
 
 app = Flask(__name__)
 app.secret_key = "sam"

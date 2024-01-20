@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 
 from flask_restful import Api, Resource
 
@@ -7,26 +7,17 @@ from flask_jwt_extended import (
     JWTManager,
 )
 
-from security import authenticate
 
 from resources.user import UserRegister
 
 from resources.item import ItemList, Item
 
+from resources.auth import Authentication
+
 app = Flask(__name__)
 app.secret_key = "sam"
 api = Api(app)
 jwt = JWTManager(app)
-
-
-class Authentication(Resource):
-    def post(self):
-        data = request.get_json()
-        user = authenticate(data["username"], data["password"])
-        if not user:
-            return {"message": "invalid credentials"}
-        access_token = create_access_token(identity=data["username"])
-        return jsonify(access_token=access_token)
 
 
 api.add_resource(Authentication, "/auth")
